@@ -87,6 +87,11 @@ builtin.lsp_references = function(opts)
   params.context = { includeDeclaration = true }
 
   local results_lsp = vim.lsp.buf_request_sync(0, "textDocument/references", params)
+
+	if results_lsp == nil then
+		return
+	end
+
   local locations = {}
   for _, server_results in pairs(results_lsp) do
     vim.list_extend(locations, vim.lsp.util.locations_to_items(server_results.result) or {})
